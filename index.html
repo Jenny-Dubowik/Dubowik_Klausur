@@ -1,0 +1,55 @@
+<html><head>
+     <title>Nachschüssige Rentenrechnung</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <script>
+     "use strict";
+     function fRentenrechnung() {
+
+     var vRente = parseFloat(document.getElementById("idStartkapital").value);
+     var vZinssatz = parseFloat(document.getElementById("idZinssatz").value/100);
+     var vLaufzeit = parseFloat(document.getElementById("idLaufzeit").value);
+     var vRentenendwert;
+     var vStartjahr = 0;
+     var vKapital;
+     var vZinsfaktor;
+     var vAusgabe;
+     var vZinsen;
+
+     vAusgabe = "";
+     vAusgabe = vAusgabe + "<tr><th>Jahr</th><th>Kapital am 1.1.</th><th>Zinsen am 31.12.</th><th>Rente am 31.12.</th><th>Kapital am 31.12.</th></tr>";
+     vAusgabe= vAusgabe + "Das Endkapital beträgt " + fRentenrechnung  + ".<br>";
+
+     vZinsfaktor = 1 + vZinssatz;
+
+     while (vStartjahr<=vLaufzeit){
+
+     vRentenendwert = vRente*(Math.pow(vZinsfaktor,vStartjahr)-1)/ (vZinsfaktor-1);
+     vZinsen = vRentenendwert * vZinssatz;
+     vKapital = vRentenendwert + vZinsen + vRente;
+
+     if(vJahr==vLaufzeit){
+       vAusgabe = vAusgabe + "<tr><td>" + vJahr + "</td><td>" + vKapital + "</td></tr>";
+
+
+     }
+     vAusgabe = vAusgabe + "<tr> <td>" + vStartjahr + "</td> <td>" + vRentenendwert.toFixed(2) + " Euro" + "</td> <td>" + vZinsen.toFixed(2) + " Euro" + "</td> <td>" + vRente + " Euro " + "</td> <td>" + vKapital.toFixed(2) + " Euro " + "</td> </tr>";
+     vStartjahr ++;
+
+     }
+
+     document.getElementById("idAusgabe").innerHTML = vAusgabe;
+
+     }
+     </script>
+     </head>
+
+     <body><h1>Nachschüssige Rentenrechnung</h1><br>
+        Zinssatz: <input id="idZinssatz" type="text" value="2">%<br>
+         Nachschüssige Rente: <input id="idStartkapital" type="text" value="100">€<br>
+         Laufzeit: <input id="idLaufzeit" type="text" value="5"> Jahre<br><br>
+     <button onclick="Rentenrechnung();">Berechnen</button>
+     <br>
+     <br>
+     <div id="idAusgabe">Klicken Sie auf den Button Berechnen, damit hier eine Tabelle erscheint...</div>
+
+     </body></html>
